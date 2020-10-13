@@ -28,6 +28,7 @@ class SoftwareController extends Controller
 
     protected function update(Request $request,$id){
         $software = Software::findOrFail($id);
+        $software->software_id = $request->software_id;
         $software->software_name = $request->software_name;
         $software->genre = $request->genre;
         $software->corresponding_hardware = $request->corresponding_hardware;
