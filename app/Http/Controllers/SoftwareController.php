@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\User;
 use App\Software;
+use StringUtil;
 
 /**
  * ソフトウェア関連ページのコントローラクラス
@@ -76,7 +77,35 @@ class SoftwareController extends Controller
         $software->software_name = $request->software_name;
         $software->genre = $request->genre;
         $software->corresponding_hardware = $request->corresponding_hardware;
-        $software->save();
-        return redirect("/software");
+        if(inputCheck($software)){
+            $software->save();
+            return redirect("/software");
+        }else{
+            return redirect("/software");
+        }
+
+    }
+
+    protected function inputCheck($software){
+        $errors = array();
+        if(!strlenCheck($software->software_id)){
+            //エラー表示
+            array_push($errors, 'id_error');
+        }
+        if(!strlenCheck($software->software_name)){
+            array_push($errors, 'name_error');
+        }
+        if(!strlenCheck($software->genre)){
+            array_push($errors, 'genre_error');
+        }
+        if(!strlenCheck($software->corresponding_hardware)){
+            array_push($errors, 'hardware_error');
+        }
+
+        //一件以上あればエラー
+        if(count($errors)>0){
+            return false;
+        }
+        return true;
     }
 }

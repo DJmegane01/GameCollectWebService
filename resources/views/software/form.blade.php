@@ -1,5 +1,6 @@
 @extends('software/layout')
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <div class="container ops-main">
     <div class="row">
         <div class="col-md-6">
@@ -10,7 +11,7 @@
             @endif
         </div>
     </div>
-    <div class="row">
+    <div id="app" class="row">
         <div class="col-md-8 col-md-offset-1">
             @if($target == 'softwareCreate')
             <form action="/software" method="post">
@@ -22,6 +23,7 @@
                 <div class="form-group">
                     <label for="software_id">ソフトウェアＩＤ</label>
                     <input type="text" class="form-control" name="software_id" value="{{ $software->software_id }}">
+                    <example-component></example-component>
                 </div>
                 <div class="form-group">
                     <label for="name">ソフトウェア名</label>
@@ -74,4 +76,5 @@
         </div>
     </div>
 </div>
+<script src=" {{ mix('js/app.js') }} "></script>
 @endsection
